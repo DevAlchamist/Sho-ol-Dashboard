@@ -1,16 +1,46 @@
 "use client";
 
-import { Box, Button, Checkbox, Input, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControl,
+  Input,
+  TextField,
+} from "@mui/material";
 import BoxImage from "@/assets/Saly-10.png";
 import Image from "next/image";
 import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+interface FormData {
+  username?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+}
 
 const SignUp = () => {
-  const [change, setChange] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>();
+  const [change, setChange] = useState<boolean>(false);
   const handleChange = () => {
     setChange(!change);
+    reset();
   };
-  const handleSubmit = () => {};
+
+  const handleRegister: SubmitHandler<FormData> = (data) => {
+    console.log(data);
+    console.error(errors);
+  };
+
+  const handleLogin: SubmitHandler<FormData> = (data) => {
+    console.log(data);
+  };
   return (
     <Box className="flex justify-between items-center">
       <Box className="flex flex-col w-full h-screen">
@@ -29,23 +59,30 @@ const SignUp = () => {
             </Box>
           </Box>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit((data) => {
+              if (!change) {
+                console.log("SignUp",(data));
+              } else {
+                console.log("Login",(data));
+              }
+            })}
             className="w-full px-2 lg:px-0 lg:w-[431px] mt-5"
           >
             <label id="email" className="text-[#999999]">
               Email
             </label>
             <Box className="relative">
-              <Input
-                required
-                fullWidth
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                placeholder="Enter your email address"
-                className="outline-none mt-4 pl-6 mb-8"
-              />
+              <FormControl fullWidth>
+                <Input
+                  id="email"
+                  {...register("email", { required: true })}
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="Enter your email address"
+                  className="outline-none mt-4 pl-6 mb-8"
+                />
+              </FormControl>
               <svg
                 width="17"
                 height="13"
@@ -66,16 +103,17 @@ const SignUp = () => {
                   UserName
                 </label>
                 <Box className="relative ">
-                  <Input
-                    required
-                    fullWidth
-                    id="name"
-                    name="name"
-                    type="name"
-                    autoComplete="name"
-                    placeholder="Enter your UserName"
-                    className="outline-none mt-4 pl-6 mb-8"
-                  />
+                  <FormControl fullWidth>
+                    <Input
+                      {...register("username", { required: true })}
+                      id="username"
+                      name="username"
+                      type="username"
+                      autoComplete="username"
+                      placeholder="Enter your UserName"
+                      className="outline-none mt-4 pl-6 mb-8"
+                    />
+                  </FormControl>
                   <svg
                     width="16"
                     height="16"
@@ -100,16 +138,16 @@ const SignUp = () => {
               Password
             </label>
             <Box className="relative mb-8">
-              <Input
-                required
-                fullWidth
-                type="password"
-                id="password"
-                name="password"
-                autoComplete="password"
-                placeholder="Enter your password"
-                className="outline-none mt-4  pl-6 placeholder:text-black"
-              />
+              <FormControl fullWidth>
+                <Input
+                  {...register("password", { required: true })}
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  className="outline-none mt-4  pl-6 placeholder:text-black"
+                />
+              </FormControl>
               <svg
                 width="13"
                 height="17"
@@ -127,7 +165,7 @@ const SignUp = () => {
                   fill="#000842"
                 />
               </svg>
-              {change === false && (
+              {!change && (
                 <Box className="flex w-full justify-between items-center">
                   <Box>
                     <Checkbox /> <span className="">Remember Me</span>
@@ -136,22 +174,22 @@ const SignUp = () => {
                 </Box>
               )}
             </Box>
-            {change === true && (
+            {change && (
               <>
-                <label id="password" className="text-[#999999]">
+                <label id="confirmPassword" className="text-[#999999]">
                   Confirm Password
                 </label>
                 <Box className="relative">
-                  <Input
-                    required
-                    fullWidth
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="password"
-                    placeholder="Enter your password"
-                    className="outline-none mt-4 pl-6 mb-8"
-                  />
+                  <FormControl fullWidth>
+                    <Input
+                      {...register("confirmPassword", { required: true })}
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      type="password"
+                      placeholder="Enter your password"
+                      className="outline-none mt-4 pl-6 mb-8"
+                    />
+                  </FormControl>
                   <svg
                     width="13"
                     height="17"
@@ -211,8 +249,8 @@ const SignUp = () => {
                     y2="37.7586"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop stop-color="#18ACFE" />
-                    <stop offset="1" stop-color="#0163E0" />
+                    <stop />
+                    <stop offset="1" />
                   </linearGradient>
                 </defs>
               </svg>

@@ -237,7 +237,7 @@ const handleNavClick = (index: any) => {
         </Box>
       </Box>
       <Box className="col-span-7"></Box>
-      <Box className="col-span-3"></Box>
+      <Box className="col-span-3 bg-white"></Box>
     </Box>
   );
 };
