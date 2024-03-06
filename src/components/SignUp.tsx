@@ -12,13 +12,7 @@ import BoxImage from "@/assets/Saly-10.png";
 import Image from "next/image";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-
-interface FormData {
-  username?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-}
+import { LoginData } from "../../Interface";
 
 const SignUp = () => {
   const {
@@ -26,20 +20,20 @@ const SignUp = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<LoginData>();
   const [change, setChange] = useState<boolean>(false);
   const handleChange = () => {
     setChange(!change);
+  };
+  
+  const handleRegister: SubmitHandler<LoginData> = (data) => {
+    console.log(data);
     reset();
   };
 
-  const handleRegister: SubmitHandler<FormData> = (data) => {
+  const handleLogin: SubmitHandler<LoginData> = (data) => {
     console.log(data);
-    console.error(errors);
-  };
-
-  const handleLogin: SubmitHandler<FormData> = (data) => {
-    console.log(data);
+    reset();
   };
   return (
     <Box className="flex justify-between items-center">
@@ -61,9 +55,9 @@ const SignUp = () => {
           <form
             onSubmit={handleSubmit((data) => {
               if (!change) {
-                console.log("SignUp",(data));
+                handleRegister(data);
               } else {
-                console.log("Login",(data));
+                handleLogin(data);
               }
             })}
             className="w-full px-2 lg:px-0 lg:w-[431px] mt-5"
