@@ -27,7 +27,8 @@ const SignUp = () => {
   };
   
   const handleRegister: SubmitHandler<LoginData> = (data) => {
-    console.log(data);
+    
+    console.log();
     reset();
   };
 
