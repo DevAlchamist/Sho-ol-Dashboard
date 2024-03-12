@@ -6,6 +6,7 @@ export default function Home() {
   return (
     
     <Box className="">
+      <HomePage/>
     </Box>
   );
 }

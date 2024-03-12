@@ -20,8 +20,7 @@ export default function RootLayout({
           <Box className="col-span-2 xl:flex lg:flex hidden flex-col w-full justify-start items-center bg-[#4D44B5]">
             <Sidebar />
           </Box>
-          <Box className=" col-span-7 bg-[#F3F4FF]">{children}</Box>
-          <Box className="col-span-3 bg-white xl:flex lg:flex hidden"></Box>
+          <Box className=" col-span-10 bg-[#F3F4FF]">{children}</Box>
         </Box>
       </body>
     </html>
