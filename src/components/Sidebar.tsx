@@ -1,4 +1,5 @@
-"use client"
+"use client";
+import { HomeWork } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import React, { useState } from "react";
 
@@ -190,7 +191,6 @@ export const UserNavigation = [
 ];
 
 const Sidebar = () => {
-  
   // Define state to track the active state of each navigation button
   const [activeNav, setActiveNav] = useState(
     Array(UserNavigation.length).fill(false)
@@ -208,8 +208,11 @@ const Sidebar = () => {
     <Box className="flex flex-col w-full justify-start items-center">
       {" "}
       <Box className="text-4xl poppins-bold my-10 text-white">
-        <span className="text-[#FB7D5B]">Sho</span>
-        -ol
+        <Box className="flex justify-center items-center">
+          <HomeWork className="h-12 w-12 mr-3 text-[#FB7D5B]" />
+          <span className="">Sho</span>
+          -ol
+        </Box>
       </Box>
       <Box className="flex flex-col w-full text-[#C1BBEB] justify-end items-end ">
         <Box className="w-[85%]">

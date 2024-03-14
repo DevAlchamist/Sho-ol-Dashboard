@@ -59,7 +59,7 @@ const HomePage = () => {
   );
 
   return (
-    <Box className="grid grid-cols-12">
+    <Box className="grid xl:grid-cols-12 lg:grid-cols-12 grid-cols-1">
       <Box className="col-span-9 py-5 h-screen overflow-y-auto">
         <Box>
           <Drawer open={open} anchor="right" onClose={toggleDrawer(false)}>
@@ -85,22 +85,22 @@ const HomePage = () => {
         <Box className="lg:h-[367px] m-5 bg-white rounded-3xl overflow-hidden h-fit">
           <Box className=" relative w-[370px]  lg:w-full">
             <Image src={BoxImage} alt="BoxImage" className=" w-full h-full" />
-            <Box className="absolute top-16 left-16 w-[164px] h-[164px] border-[10px] border-white bg-gray-400 rounded-full"></Box>
+            <Box className="absolute lg:top-16 lg:left-16 top-5 left-5 lg:w-[164px] md:w-[100px] md:h-[100px] w-[70px] h-[70px] lg:h-[164px] border-[10px] border-white bg-gray-400 rounded-full"></Box>
           </Box>
-          <Box className="mx-[62px]  mt-20 flex justify-between items-center">
-            <Box className="text-3xl text-[#363B64] font-bold">
+          <Box className="lg:mx-[62px] mx-[10px] mt-5  lg:mt-20 flex justify-between items-center">
+            <Box className="lg:text-3xl text-[#363B64] font-bold">
               Nabila Azalea
             </Box>
             <Box className="">
               <DropDown />
             </Box>
           </Box>
-          <Box className="mx-[62px] font-semibold text-[#363B64] flex justify-between items-center">
+          <Box className="lg:mx-[62px] mx-[10px] lg:text-base text-xs font-semibold text-[#363B64] flex justify-between items-center">
             <Box className="text-start w-full">Admin</Box>
             <Box className="text-start w-full">Phone</Box>
             <Box className="text-start w-full">G-Mail</Box>
           </Box>
-          <Box className="mx-[62px] font-semibold text-[#363B64] flex justify-between items-center">
+          <Box className="lg:mx-[62px] lg:mb-0 mb-5 mx-[10px] lg:text-base text-[7px] font-semibold text-[#363B64] flex justify-between items-center">
             <Box className="text-[#A098AE] font-normal text-start w-full flex items-center">
               <svg
                 width="16"
@@ -108,7 +108,7 @@ const HomePage = () => {
                 viewBox="0 0 16 21"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="mr-2"
+                className="mr-2 lg:w-[16px] lg:h-[21px] w-[12px] h-[12px]"
               >
                 <path
                   d="M8 0.5C5.87827 0.5 3.84344 1.34285 2.34315 2.84315C0.842855 4.34344 0 6.37827 0 8.5C0 13.9 7.05 20 7.35 20.26C7.53113 20.4149 7.76165 20.5001 8 20.5001C8.23835 20.5001 8.46887 20.4149 8.65 20.26C9 20 16 13.9 16 8.5C16 6.37827 15.1571 4.34344 13.6569 2.84315C12.1566 1.34285 10.1217 0.5 8 0.5ZM8 18.15C5.87 16.15 2 11.84 2 8.5C2 6.9087 2.63214 5.38258 3.75736 4.25736C4.88258 3.13214 6.4087 2.5 8 2.5C9.5913 2.5 11.1174 3.13214 12.2426 4.25736C13.3679 5.38258 14 6.9087 14 8.5C14 11.84 10.13 16.16 8 18.15ZM8 4.5C7.20887 4.5 6.43552 4.7346 5.77772 5.17412C5.11992 5.61365 4.60723 6.23836 4.30448 6.96927C4.00173 7.70017 3.92252 8.50444 4.07686 9.28036C4.2312 10.0563 4.61216 10.769 5.17157 11.3284C5.73098 11.8878 6.44371 12.2688 7.21964 12.4231C7.99556 12.5775 8.79983 12.4983 9.53073 12.1955C10.2616 11.8928 10.8864 11.3801 11.3259 10.7223C11.7654 10.0645 12 9.29113 12 8.5C12 7.43913 11.5786 6.42172 10.8284 5.67157C10.0783 4.92143 9.06087 4.5 8 4.5ZM8 10.5C7.60444 10.5 7.21776 10.3827 6.88886 10.1629C6.55996 9.94318 6.30362 9.63082 6.15224 9.26537C6.00087 8.89991 5.96126 8.49778 6.03843 8.10982C6.1156 7.72186 6.30608 7.36549 6.58579 7.08579C6.86549 6.80608 7.22186 6.6156 7.60982 6.53843C7.99778 6.46126 8.39991 6.50087 8.76537 6.65224C9.13082 6.80362 9.44318 7.05996 9.66294 7.38886C9.8827 7.71776 10 8.10444 10 8.5C10 9.03043 9.78929 9.53914 9.41421 9.91421C9.03914 10.2893 8.53043 10.5 8 10.5Z"
@@ -117,14 +117,12 @@ const HomePage = () => {
               </svg>
               Jakarta, Indonesia
             </Box>
-            <Box className="text-start w-full flex items-center">
+            <Box className="text-start w-full lg:text-base text-[7px] flex items-center">
               <svg
-                width="40"
-                height="41"
                 viewBox="0 0 40 41"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="mr-2"
+                className="mr-2 lg:w-[40px] lg:h-[41px] w-[12px] h-[12px]"
               >
                 <rect
                   y="0.740234"
@@ -142,12 +140,10 @@ const HomePage = () => {
             </Box>
             <Box className="text-start w-full flex items-center">
               <svg
-                width="40"
-                height="41"
                 viewBox="0 0 40 41"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="mr-2"
+                className="mr-2 lg:w-[40px] lg:h-[41px] w-[12px] h-[12px]"
               >
                 <rect
                   y="0.740234"
@@ -172,7 +168,7 @@ const HomePage = () => {
         </Box>
       </Box>
       <Box className="col-span-3 bg-white xl:flex lg:flex hidden">
-        <UserRightBar/>
+        <UserRightBar />
       </Box>
     </Box>
   );

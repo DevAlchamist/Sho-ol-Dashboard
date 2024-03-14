@@ -1,5 +1,6 @@
 "use client";
 import StudentCard from "@/components/StudentCard";
+import usePagination from "@/components/pagination/PaginationComponent";
 import {
   Add,
   ExpandMore,
@@ -25,7 +26,7 @@ interface Item {
   subject: string;
 }
 
-const Attendee = () => {
+const AllTeachers = () => {
   // more dropdown logic
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -36,35 +37,16 @@ const Attendee = () => {
     setAnchorEl(null);
   };
 
-  // Demo data
-  const demoData: Item[] = Array.from({ length: 20 }, (_, index) => ({
+  const demoData: Item[] = Array.from({ length: 48 }, (_, index) => ({
     id: index + 1,
     name: `Dimitres Viga ${index + 1}`,
     subject: `Mathematics ${index + 1}`,
   }));
-
-  // Pagination state
-  const [page, setPage] = useState<number>(1);
   const itemsPerPage: number = 8;
 
-  // Function to display items for the current page
-  const displayItemsForPage = (pageNumber: number): Item[] => {
-    const startIndex: number = (pageNumber - 1) * itemsPerPage;
-    const endIndex: number = startIndex + itemsPerPage;
-    return demoData.slice(startIndex, endIndex);
-  };
+  const { displayItems, totalPages, currentPage, setPage, handleChange } =
+    usePagination<Item>(demoData, itemsPerPage);
 
-  // Function to handle pagination change
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
-
-  // Function to calculate total pages based on total items and items per page
-  const getTotalPages = (): number => {
-    return Math.ceil(demoData.length / itemsPerPage);
-  };
-
-  // Render function to render items on the UI
   const renderItems = (items: Item[]): JSX.Element[] => {
     return items.map((item) => (
       <StudentCard key={item.id} subject={item.subject} name={item.name} />
@@ -77,7 +59,7 @@ const Attendee = () => {
           Teachers
         </Box>
         <Box>
-          <Box className="flex justify-around ">
+          <Box className="lg:flex hidden justify-around ">
             <Box className=" mx-3 w-[60px] h-[60px] flex items-center justify-center ">
               <Badge
                 className="text-[#A098AE]"
@@ -109,14 +91,14 @@ const Attendee = () => {
           </Box>
         </Box>
       </Box>
-      <Box className="px-5 flex justify-between items-center">
+      <Box className="px-5 flex justify-end lg:justify-between items-center">
         <Box className=" relative bg-white w-[350px] border border-gray-300 hidden lg:flex rounded-full overflow-hidden">
           <FormControl>
-            <Search className="h-8 w-8 absolute top-3 left-5" />
+            <Search className="h-8 w-8 text-[#4D44B5] absolute top-3 left-5" />
             <input className=" pl-14 h-[60px] outline-none" />
           </FormControl>
         </Box>
-        <Box className="flex items-center">
+        <Box className="flex justify-end items-center">
           <Box className="mx-5 flex items-center">
             {" "}
             <Button
@@ -126,7 +108,7 @@ const Attendee = () => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
-              className="font-semibold border-[#4D44B5] border-2 text-[#4D44B5] w-[207px] h-[60px] rounded-full hover:text-white hover:bg-[#4D44B5]"
+              className="font-semibold text-xs lg:text-base border-[#4D44B5] border-2 text-[#4D44B5] w-auto lg:w-[207px] lg:h-[60px] h-auto rounded-full hover:text-white hover:bg-[#4D44B5]"
               endIcon={<ExpandMore />}
             >
               Newest
@@ -146,7 +128,7 @@ const Attendee = () => {
           </Box>
           <Button
             sx={{ border: 1 }}
-            className="font-semibold  border-[#4D44B5]  hover:bg-white  hover:text-[#4D44B5] w-[207px] h-[60px] rounded-full text-white bg-[#4D44B5]"
+            className="font-semibold text-xs lg:text-base border-[#4D44B5]  hover:bg-white  hover:text-[#4D44B5] w-auto lg:w-[207px] lg:h-[60px]  h-auto rounded-full text-white bg-[#4D44B5]"
             startIcon={<Add />}
           >
             Delete
@@ -154,26 +136,24 @@ const Attendee = () => {
         </Box>
       </Box>
       {/* Pagination Part */}
-      <Box className=" my-5 gap-5  p-5 grid grid-cols-12">
-        {renderItems(displayItemsForPage(page))}
+      <Box className=" my-5 gap-5   p-5 grid grid-cols-12">
+        {renderItems(displayItems)}
       </Box>
-      <Box className="flex justify-between items-center">
-        <Box className="text-[#303972]">
-          Showing From {page} from {getTotalPages()} data
+      <Box className="flex justify-center lg:justify-between items-center">
+        <Box className="lg:flex hidden text-[#303972]">
+          Showing From {currentPage} from {totalPages} data
         </Box>
-        <Box>
+        <Box className="">
           {/* Pagination component */}
-          <Stack spacing={2}>
-            <Pagination
-              count={getTotalPages()}
-              page={page}
-              onChange={handleChange}
-            />
-          </Stack>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handleChange}
+          />
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default Attendee;
+export default AllTeachers;

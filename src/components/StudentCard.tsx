@@ -16,14 +16,14 @@ interface StudentCardProps {
 
 const StudentCard = ({name,subject,images}:StudentCardProps) => {
   return (
-    <Box className="h-[352px] col-span-3 rounded-lg w-[338px] bg-white p-2 flex items-center relative justify-center">
+    <Box className="h-fit lg:h-[352px] lg:col-span-3 col-span-12 rounded-lg w-full lg:w-[338px] bg-white p-2 flex items-center relative justify-center">
       <MoreHoriz className="absolute top-5 right-5" />
       <Box className="flex flex-col items-center justify-center">
-        <Box className="h-[120px] w-[120px] bg-[#C1BBEB] rounded-full" />
+        <Box className="lg:h-[120px] lg:w-[120px] w-[80px] h-[80px] bg-[#C1BBEB] rounded-full" />
         <Box className="text-center font-bold text-xl text-[#303972] mt-3">
           {name}
         </Box>
-        <Box className="text-center font-extralight text-[#303972]">
+        <Box className="text-center mt-3 font-extralight text-[#303972]">
           {subject}
         </Box>
         <Box className="flex mt-5 justify-center items-center gap-5">
