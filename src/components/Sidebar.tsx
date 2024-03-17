@@ -1,6 +1,7 @@
 "use client";
 import { HomeWork } from "@mui/icons-material";
 import { Box } from "@mui/material";
+import Link from "next/link";
 import React, { useState } from "react";
 
 export const UserNavigation = [
@@ -22,7 +23,7 @@ export const UserNavigation = [
         />
       </svg>
     ),
-    link: "/",
+    link: "/user",
   },
   {
     index: 2,
@@ -42,7 +43,7 @@ export const UserNavigation = [
         />
       </svg>
     ),
-    link: "/",
+    link: "/user",
   },
   {
     index: 3,
@@ -62,7 +63,7 @@ export const UserNavigation = [
         />
       </svg>
     ),
-    link: "/",
+    link: "/teachers",
   },
   {
     index: 4,
@@ -214,7 +215,7 @@ const Sidebar = () => {
           -ol
         </Box>
       </Box>
-      <Box className="flex flex-col w-full text-[#C1BBEB] justify-end items-end ">
+      <Box className="flex flex-col w-full text-[#c1bbeb] justify-end items-end ">
         <Box className="w-[85%]">
           {UserNavigation.map((nav, index) => (
             <Box

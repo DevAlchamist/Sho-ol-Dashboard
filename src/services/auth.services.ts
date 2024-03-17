@@ -8,9 +8,7 @@ export interface RegisterData extends LoginData {
 class AuthService {
   login = async (data: LoginData): Promise<any> => {
     try {
-      const response = await httpservice.post("api/users/login", {
-        params: data,
-      });
+      const response = await httpservice.post("api/users/login", { ...data });
       return response.data;
     } catch (error) {
       console.log(error);
@@ -20,9 +18,7 @@ class AuthService {
 
   register = async (data: RegisterData): Promise<any> => {
     try {
-      const response = await httpservice.post("/api/user/register", {
-        params: data,
-      });
+      const response = await httpservice.post("api/users/create", { ...data });
       return response;
     } catch (error) {
       console.log(error);

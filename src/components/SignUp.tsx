@@ -13,8 +13,15 @@ import Image from "next/image";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginData } from "../../Interface";
+import { AppDispatch } from "@/Store/store";
+import { useDispatch } from "react-redux";
+import authServices, { RegisterData } from "@/services/auth.services";
+import TokenHelpers from "@/helpers/Token.helpers";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -25,17 +32,47 @@ const SignUp = () => {
   const handleChange = () => {
     setChange(!change);
   };
-  
-  const handleRegister: SubmitHandler<LoginData> = (data) => {
-    
-    console.log();
-    reset();
+
+  const handleLogin = async (data: LoginData) => {
+    if (!change) {
+      console.log(data);
+      try {
+        const response = await authServices.login(data);
+        const token = response?.data?.result?.accessToken;
+        console.log(token);
+        if (token) {
+          console.log(token);
+          TokenHelpers.create(token);
+          router.push("/");
+          console.log("token", token);
+        }
+        reset();
+      } catch (error) {
+        toast.error("An error Occurred");
+        reset();
+      }
+    }
+  };
+  const handleRegister = async (data: RegisterData) => {
+    console.log(data);
+    try {
+      const response = await authServices.register(data);
+      console.log(response);
+      const token = response?.data?.result?.accessToken;
+      console.log(token);
+      if (token) {
+        console.log(token);
+        TokenHelpers.create(token);
+        router.push("/");
+        console.log("token", token);
+      }
+      reset();
+    } catch (error) {
+      toast.error("An error Occurred");
+      reset();
+    }
   };
 
-  const handleLogin: SubmitHandler<LoginData> = (data) => {
-    console.log(data);
-    reset();
-  };
   return (
     <Box className="flex justify-between items-center">
       <Box className="flex flex-col w-full h-screen">
@@ -54,8 +91,8 @@ const SignUp = () => {
             </Box>
           </Box>
           <form
-            onSubmit={handleSubmit((data) => {
-              if (!change) {
+            onSubmit={handleSubmit((data: any) => {
+              if (change) {
                 handleRegister(data);
               } else {
                 handleLogin(data);
@@ -103,7 +140,7 @@ const SignUp = () => {
                       {...register("username", { required: true })}
                       id="username"
                       name="username"
-                      type="username"
+                      type="text"
                       autoComplete="username"
                       placeholder="Enter your UserName"
                       className="outline-none mt-4 pl-6 mb-8"

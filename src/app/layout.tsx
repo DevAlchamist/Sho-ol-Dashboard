@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Box, Button, Drawer } from "@mui/material";
 import Sidebar from "@/components/Sidebar";
+import { Provider, useSelector } from "react-redux";
+import store from "@/Store/store";
+import Register from "./register/page";
+import { selectFetchUsers } from "./user/userSlice";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,15 +17,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const login = true;
   return (
     <html lang="en">
       <body>
-        <Box className="grid xl:grid-cols-12 lg:grid-cols-12 grid-cols-1 h-screen">
-          <Box className="col-span-2 xl:flex lg:flex hidden flex-col w-full justify-start items-center bg-[#4D44B5]">
-            <Sidebar />
+        {login ? (
+          <Box className="grid xl:grid-cols-12 lg:grid-cols-12 grid-cols-1 h-screen">
+            <Box className="col-span-2 xl:flex lg:flex hidden flex-col w-full justify-start items-center bg-[#4D44B5]">
+              <Sidebar />
+            </Box>
+            <Box className=" col-span-10 bg-[#F3F4FF]">{children}</Box>
           </Box>
-          <Box className=" col-span-10 bg-[#F3F4FF]">{children}</Box>
-        </Box>
+        ) : (
+          <Box>
+            <Register />
+          </Box>
+        )}
       </body>
     </html>
   );
