@@ -1,7 +1,7 @@
 class TokenHelper {
     private key: string;
     constructor() {
-      this.key = "helixhub-token";
+      this.key = "token";
     }
     get = (): string | null => {
       return window.localStorage.getItem(this.key);

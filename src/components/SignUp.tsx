@@ -10,15 +10,17 @@ import {
 } from "@mui/material";
 import BoxImage from "@/assets/Saly-10.png";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginData } from "../../Interface";
 import { AppDispatch } from "@/Store/store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import authServices, { RegisterData } from "@/services/auth.services";
 import TokenHelpers from "@/helpers/Token.helpers";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { getAllUsersAsync } from "../Store/userSlice";
+import { useAppDispatch } from "@/helpers/hooks";
 
 const SignUp = () => {
   const router = useRouter();
@@ -29,6 +31,7 @@ const SignUp = () => {
     formState: { errors },
   } = useForm<LoginData>();
   const [change, setChange] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
   const handleChange = () => {
     setChange(!change);
   };
@@ -47,6 +50,9 @@ const SignUp = () => {
           console.log("token", token);
         }
         reset();
+        useEffect(() => {
+          dispatch(getAllUsersAsync(token));
+        }, [token]);
       } catch (error) {
         toast.error("An error Occurred");
         reset();
@@ -59,14 +65,15 @@ const SignUp = () => {
       const response = await authServices.register(data);
       console.log(response);
       const token = response?.data?.result?.accessToken;
-      console.log(token);
       if (token) {
         console.log(token);
         TokenHelpers.create(token);
         router.push("/");
-        console.log("token", token);
       }
       reset();
+      useEffect(() => {
+        dispatch(getAllUsersAsync(token));
+      }, [token]);
     } catch (error) {
       toast.error("An error Occurred");
       reset();

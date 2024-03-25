@@ -9,3 +9,7 @@ export interface RegisterData extends LoginData {
   email?: String;
   password?: String;
 }
+
+export interface userTokenProps {
+  token: any;
+}

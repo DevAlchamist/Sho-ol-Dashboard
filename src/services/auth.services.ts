@@ -1,5 +1,5 @@
 import httpservice from "@/config/httpService";
-import { LoginData } from "../../Interface";
+import { LoginData, userTokenProps } from "../../Interface";
 
 export interface RegisterData extends LoginData {
   phone: number;
@@ -9,7 +9,8 @@ class AuthService {
   login = async (data: LoginData): Promise<any> => {
     try {
       const response = await httpservice.post("api/users/login", { ...data });
-      return response.data;
+      return { ...response };
+      console.log({ ...response });
     } catch (error) {
       console.log(error);
       throw error;

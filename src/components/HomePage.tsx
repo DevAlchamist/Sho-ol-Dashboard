@@ -24,13 +24,18 @@ import {
   TextField,
 } from "@mui/material";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { UserNavigation } from "./Sidebar";
 import DropDown from "./DropDown";
 import Contacts from "./Contacts";
 import UserRightBar from "./UserRightBar";
+import { useSelector } from "react-redux";
+import { getAllUsersAsync, selectGetAllUsersAsync } from "../Store/userSlice";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/helpers/hooks";
+import { userTokenProps } from "../../Interface";
 
 const HomePage = () => {
   const [open, setOpen] = useState(false);
@@ -57,6 +62,18 @@ const HomePage = () => {
       </List>
     </Box>
   );
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  useEffect(() => {
+    // Check for token in localStorage
+    const token = localStorage.getItem("token");
+    if (token) {
+      // If token exists, set isLoggedIn to true
+      dispatch(getAllUsersAsync(token));
+    }
+  }, [router, dispatch]);
+  const user = useSelector(selectGetAllUsersAsync);
+  console.log(user);
 
   return (
     <Box className="grid xl:grid-cols-12 lg:grid-cols-12 grid-cols-1">

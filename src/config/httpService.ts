@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 import TokenHelper from "../helpers/Token.helpers";
 import { toast } from "react-toastify";
 
-axios.defaults.baseURL = "http://localhost:8000"; //  url
+axios.defaults.baseURL = "http://localhost:8001"; //  url
 
 axios.interceptors.request.use(
   async (

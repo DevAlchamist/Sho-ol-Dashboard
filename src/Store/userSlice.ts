@@ -1,40 +1,48 @@
 // src/features/users/usersSlice.ts
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import ApiService from "../../config/httpService"; // Ensure this import path is correct
+import ApiService from "../config/httpService"; // Ensure this import path is correct
 import { RootState } from "@/Store/rootReducer";
 import authServices, { RegisterData } from "@/services/auth.services";
-import { LoginData } from "../../../Interface";
+import userServices from "@/services/user.services";
 
 // Define the type for a user
 type User = {
   id: number;
-  name: string;
+  username: string;
   email: string;
+  class: string;
+  createdAt: string;
+  updatedAt: string;
+  password: string;
+  role: "SuperAdmin" | "Admin" | "User";
   // Add other user properties as needed
 };
 
 // Define the state type for the users slice
 type UsersState = {
-  users: User[];
+  usersInfo: User[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 };
 
 // Define the initial state
 const initialState: UsersState = {
-  users: [],
   status: "idle",
   error: null,
+  usersInfo: [],
 };
 
 // Create the async thunk for fetching users
-export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
-  const response = await ApiService.get("/users"); // Adjust the endpoint as necessary
-  if (!response.data) {
-    throw new Error("No data received from the API");
+export const getAllUsersAsync = createAsyncThunk(
+  "users/getUsers",
+  async (userToken: string) => {
+    const response = await userServices.getAllUsers(userToken); // Adjust the endpoint as necessary
+    if (!response) {
+      throw new Error("No data received from the API");
+    }
+    return response;
   }
-  return response.data;
-});
+);
 
 // Create the users slice
 const usersSlice = createSlice({
@@ -43,20 +51,20 @@ const usersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUsers.pending, (state) => {
+      .addCase(getAllUsersAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
+      .addCase(getAllUsersAsync.fulfilled, (state: any, action) => {
         state.status = "succeeded";
-        state.users = action.payload;
+        state.usersInfo = action.payload;
       })
-      .addCase(fetchUsers.rejected, (state, action) => {
+      .addCase(getAllUsersAsync.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "An error occurred";
       });
   },
 });
-export const selectFetchUsers = (state: RootState) => state.users.users;
+export const selectGetAllUsersAsync = (state: UsersState) => state.usersInfo;
 export const selectUsersStatus = (state: RootState) => state.users.status;
 export const selectUsersErrors = (state: RootState) => state.users.error;
 
