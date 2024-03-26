@@ -15,8 +15,11 @@ import {
   TimelineItem,
   TimelineSeparator,
 } from "@mui/lab";
+import { LoginData } from "../../Interface";
 
-const UserRightBar = () => {
+const UserRightBar = ({ Data }: any) => {
+  const user = Data;
+  console.log(user);
   return (
     <Box className="p-5 flex w-full flex-col items-start justify-start">
       <Box className="flex  w-full items-center justify-end">
@@ -39,9 +42,9 @@ const UserRightBar = () => {
             />
           </svg>
         </Box>
-        <Box className="text-[#363B64] mr-4">
-          Nabila A.
-          <Box className="text-gray-300"> Admin</Box>
+        <Box className="capitalize text-[#363B64] mr-4">
+          {user.username}
+          <Box className="text-gray-300">{user.role}</Box>
         </Box>
         <Box className="h-[60px] w-[60px] bg-[#C1BBEB] rounded-full"></Box>
       </Box>
@@ -72,8 +75,7 @@ const UserRightBar = () => {
         <Box className="mb-5 text-[#363B64] text-3xl font-bold">
           Latest Activity
         </Box>
-        <Box className="">
-        </Box>
+        <Box className=""></Box>
       </Box>
     </Box>
   );

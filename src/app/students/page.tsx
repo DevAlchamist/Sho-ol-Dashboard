@@ -1,33 +1,28 @@
 "use client";
-import StudentCard from "@/components/StudentCard";
-import usePagination from "@/components/pagination/PaginationComponent";
 import {
   Add,
   ExpandMore,
+  Mail,
+  MoreHoriz,
   NotificationsActiveOutlined,
+  Phone,
   Search,
 } from "@mui/icons-material";
 import {
   Badge,
   Box,
   Button,
+  Checkbox,
   FormControl,
   Menu,
   MenuItem,
-  Pagination,
-  Stack,
-  Typography,
+  Table,
+  TableBody,
+  TableHead,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 
-interface Item {
-  id: number;
-  name: string;
-  subject: string;
-}
-
-const AllTeachers = () => {
-  // more dropdown logic
+const page = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,31 +32,17 @@ const AllTeachers = () => {
     setAnchorEl(null);
   };
 
-  const demoData: Item[] = Array.from({ length: 48 }, (_, index) => ({
-    id: index + 1,
-    name: `Dimitres Viga ${index + 1}`,
-    subject: `Mathematics ${index + 1}`,
-  }));
-  const itemsPerPage: number = 8;
+  const students = [
+    { id: 1, name: "John Doe", grade: "A" },
+    { id: 2, name: "Jane Smith", grade: "B" },
+    { id: 3, name: "Alex Johnson", grade: "C" },
+  ];
 
-  const { displayItems, totalPages, currentPage, setPage, handleChange } =
-    usePagination<Item>(demoData, itemsPerPage);
-
-  const renderItems = (items: Item[]): JSX.Element[] => {
-    return items.map((item) => (
-      <StudentCard
-        _id={item.id}
-        key={item.id}
-        subject={item.subject}
-        name={item.name}
-      />
-    ));
-  };
   return (
     <Box className="p-5 h-screen overflow-y-auto ">
       <Box className="p-5 flex justify-between items-center">
         <Box className="lg:text-4xl text-lg text-[#363B64] font-bold">
-          Teachers
+          Students
         </Box>
         <Box>
           <Box className="lg:flex hidden justify-around ">
@@ -90,7 +71,7 @@ const AllTeachers = () => {
             </Box>
             <Box className="text-[#363B64] mr-4">
               Nabila A.
-              <Box className="text-gray-300"> Admin</Box>
+              <Box className="text-gray-300"> User</Box>
             </Box>
             <Box className="h-[60px] w-[60px] ml-3 bg-[#C1BBEB] rounded-full"></Box>
           </Box>
@@ -140,25 +121,91 @@ const AllTeachers = () => {
           </Button>
         </Box>
       </Box>
-      {/* Pagination Part */}
-      <Box className=" my-5 gap-5   p-5 grid grid-cols-12">
-        {renderItems(displayItems)}
-      </Box>
-      <Box className="flex justify-center lg:justify-between items-center">
-        <Box className="lg:flex hidden text-[#303972]">
-          Showing From {currentPage} from {totalPages} data
-        </Box>
-        <Box className="">
-          {/* Pagination component */}
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={handleChange}
-          />
+      <Box className="flex flex-col overflow-hidden">
+        <Box className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <Box className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+            <Box className="h-fit rounded-xl bg-white">
+              <Table className="text-[#303972] min-w-full text-left text-sm font-light">
+                <TableHead className="border-b font-medium dark:border-neutral-500">
+                  <tr>
+                    <th scope="col" className="px-6 py-4">
+                      <Checkbox />
+                    </th>
+                    <th scope="col" className="px-6 py-4">
+                      Name
+                    </th>
+                    <th scope="col" className="px-6 py-4">
+                      ID
+                    </th>
+                    <th scope="col" className="px-6 py-4">
+                      Date
+                    </th>
+                    <th scope="col" className="px-6 py-4">
+                      Parent Name
+                    </th>
+                    <th scope="col" className="px-6 py-4">
+                      City
+                    </th>
+                    <th scope="col" className="px-6 py-4">
+                      Contact
+                    </th>
+                    <th scope="col" className="px-6 py-4">
+                      Grade
+                    </th>
+                    <th scope="col" className="px-6 py-4">
+                      Actions
+                    </th>
+                  </tr>
+                </TableHead>
+                <TableBody>
+                  {students.map((student) => (
+                    <tr
+                      key={student.id}
+                      className="border-b dark:border-neutral-500"
+                    >
+                      <td className=" whitespace-nowrap px-6 py-4">
+                        <Checkbox />
+                      </td>
+                      <td className="flex font-semibold items-center whitespace-nowrap px-6 py-4">
+                        <Box className=" lg:h-[50px] mr-2 h-[20px] w-[20px] lg:w-[50px] bg-[#C1BBEB] rounded-full"></Box>
+                        {student.name}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4 font-medium">
+                        {student.id}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        26,March 2024
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        Maria William
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        New Delhi, India
+                      </td>
+                      <td className="flex whitespace-nowrap px-6 py-4">
+                        <Box className="p-2 mr-2 bg-[#C1BBEB] rounded-full">
+                          <Phone />
+                        </Box>
+                        <Box className="p-2 ml-2 bg-[#C1BBEB] rounded-full">
+                          <Mail />
+                        </Box>
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        {student.grade}
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        <MoreHoriz />
+                      </td>
+                    </tr>
+                  ))}
+                </TableBody>
+              </Table>
+            </Box>
+          </Box>
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default AllTeachers;
+export default page;

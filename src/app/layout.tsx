@@ -39,11 +39,7 @@ export default function RootLayout({
               </Box>
               <Box className=" col-span-10 bg-[#F3F4FF]">{children}</Box>
             </Box>
-          ) : (
-            <Box>
-              {children}
-            </Box>
-          )}
+          ) : <Register/>}
         </body>
       </html>
     </Provider>

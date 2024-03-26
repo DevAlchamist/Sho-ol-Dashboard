@@ -43,7 +43,7 @@ export const UserNavigation = [
         />
       </svg>
     ),
-    link: "/user",
+    link: "/students",
   },
   {
     index: 3,
@@ -63,7 +63,7 @@ export const UserNavigation = [
         />
       </svg>
     ),
-    link: "/teachers",
+    link: "/teachers/details",
   },
   {
     index: 4,
@@ -218,20 +218,24 @@ const Sidebar = () => {
       <Box className="flex flex-col w-full text-[#c1bbeb] justify-end items-end ">
         <Box className="w-[85%]">
           {UserNavigation.map((nav, index) => (
-            <Box
-              key={nav.index}
-              onClick={() => handleNavClick(index)} // Handle click event
-              className={`p-5 text-start rounded-l-2xl flex items-center w-full ${
-                activeNav[index] ? "bg-[#F3F4FF]" : ""
-              }`}
-            >
-              {nav.icons && (
-                <Box className={`${activeNav[index] ? "text-[#4D44B5]" : ""}`}>
-                  {nav.icons}
-                </Box>
-              )}
-              {nav.title}
-            </Box>
+            <Link href={nav.link}>
+              <Box
+                key={nav.index}
+                onClick={() => handleNavClick(index)} // Handle click event
+                className={`p-5 text-start rounded-l-2xl flex items-center w-full ${
+                  activeNav[index] ? "bg-[#F3F4FF]" : ""
+                }`}
+              >
+                {nav.icons && (
+                  <Box
+                    className={`${activeNav[index] ? "text-[#4D44B5]" : ""}`}
+                  >
+                    {nav.icons}
+                  </Box>
+                )}
+                {nav.title}
+              </Box>
+            </Link>
           ))}
         </Box>
         <Box className="pl-10 pt-5 flex poppins-bold items-center text-sm text-start w-full">

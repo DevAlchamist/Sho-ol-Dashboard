@@ -3,6 +3,7 @@ export interface LoginData {
   password?: String;
   confirmPassword?: String;
   username?: String;
+  role?: string;
 }
 
 export interface RegisterData extends LoginData {

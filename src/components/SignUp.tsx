@@ -5,7 +5,10 @@ import {
   Button,
   Checkbox,
   FormControl,
+  FormControlLabel,
+  FormGroup,
   Input,
+  RadioGroup,
   TextField,
 } from "@mui/material";
 import BoxImage from "@/assets/Saly-10.png";
@@ -19,7 +22,7 @@ import authServices, { RegisterData } from "@/services/auth.services";
 import TokenHelpers from "@/helpers/Token.helpers";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { getAllUsersAsync } from "../Store/userSlice";
+import { getUsersAsync } from "../Store/userSlice";
 import { useAppDispatch } from "@/helpers/hooks";
 
 const SignUp = () => {
@@ -29,7 +32,7 @@ const SignUp = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<LoginData>();
+  } = useForm<LoginData>({});
   const [change, setChange] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const handleChange = () => {
@@ -38,20 +41,16 @@ const SignUp = () => {
 
   const handleLogin = async (data: LoginData) => {
     if (!change) {
-      console.log(data);
       try {
         const response = await authServices.login(data);
         const token = response?.data?.result?.accessToken;
-        console.log(token);
         if (token) {
-          console.log(token);
           TokenHelpers.create(token);
           router.push("/");
-          console.log("token", token);
         }
         reset();
         useEffect(() => {
-          dispatch(getAllUsersAsync(token));
+          dispatch(getUsersAsync(token));
         }, [token]);
       } catch (error) {
         toast.error("An error Occurred");
@@ -72,7 +71,7 @@ const SignUp = () => {
       }
       reset();
       useEffect(() => {
-        dispatch(getAllUsersAsync(token));
+        dispatch(getUsersAsync(token));
       }, [token]);
     } catch (error) {
       toast.error("An error Occurred");
@@ -213,42 +212,8 @@ const SignUp = () => {
                 </Box>
               )}
             </Box>
-            {change && (
-              <>
-                <label id="confirmPassword" className="text-[#999999]">
-                  Confirm Password
-                </label>
-                <Box className="relative">
-                  <FormControl fullWidth>
-                    <Input
-                      {...register("confirmPassword", { required: true })}
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      type="password"
-                      placeholder="Enter your password"
-                      className="outline-none mt-4 pl-6 mb-8"
-                    />
-                  </FormControl>
-                  <svg
-                    width="13"
-                    height="17"
-                    viewBox="0 0 13 17"
-                    fill="none"
-                    className="absolute top-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M11.0032 7.2296V4.53742C11.0104 3.31927 10.5238 2.14798 9.65526 1.29383C8.81554 0.457706 7.71632 0 6.55223 0C6.53421 0 6.51259 0 6.49457 0C4.01142 0.00360399 1.99319 2.03625 1.99319 4.53742V7.2296C1.05616 7.34132 0.371399 8.12699 0.371399 9.07844V15.1259C0.371399 16.1531 1.19311 17 2.22024 17H10.7797C11.8068 17 12.6286 16.1531 12.6286 15.1259V9.07844C12.6249 8.13059 11.9402 7.34132 11.0032 7.2296ZM2.71039 4.53742H2.71399C2.71399 2.43269 4.41147 0.709985 6.49817 0.709985H6.50178C7.49287 0.706381 8.44433 1.09922 9.1471 1.79839C9.87871 2.52279 10.286 3.51028 10.2788 4.53742V7.2332H9.48588V4.53742C9.49309 3.71931 9.16873 2.93364 8.58849 2.35701C8.04068 1.8092 7.29826 1.49926 6.5234 1.49926H6.50178C4.84394 1.49926 3.50326 2.86156 3.50326 4.53381V7.2332H2.71039V4.53742ZM8.76868 4.53742V7.2332H4.22766V4.53742C4.22766 3.26161 5.24399 2.22366 6.50538 2.22366H6.52701C7.11085 2.22366 7.67307 2.45792 8.08753 2.87238C8.52722 3.31206 8.77589 3.91393 8.76868 4.53742ZM11.9402 15.1367C11.9402 15.7674 11.4284 16.2792 10.7977 16.2792H2.23466C1.60396 16.2792 1.0922 15.7674 1.0922 15.1367V9.09646C1.0922 8.46576 1.60396 7.954 2.23466 7.954H10.7977C11.4284 7.954 11.9402 8.46576 11.9402 9.09646V15.1367Z"
-                      fill="#000842"
-                    />
-                    <path
-                      d="M7.74516 11.8933C7.58659 11.3347 7.07843 10.9526 6.49818 10.9526C5.78099 10.9526 5.19714 11.5329 5.19714 12.2537C5.19714 12.8339 5.57917 13.3421 6.13778 13.5007V14.5098C6.13778 14.708 6.29996 14.8702 6.49818 14.8702C6.6964 14.8702 6.85858 14.708 6.85858 14.5098V13.5007C7.54694 13.3024 7.94699 12.5816 7.74516 11.8933ZM6.49818 12.8303C6.17743 12.8303 5.91794 12.5708 5.91794 12.2501C5.91794 11.9293 6.17743 11.6698 6.49818 11.6698C6.81894 11.6698 7.07842 11.9293 7.07842 12.2501C7.07842 12.5708 6.81894 12.8303 6.49818 12.8303Z"
-                      fill="#000842"
-                    />
-                  </svg>
-                </Box>
-              </>
-            )}
+            {/* {change && (
+            )} */}
             <Button
               type="submit"
               className="w-full lg:w-[429px] rounded-3xl shadow-2xl py-3 bg-[#4D44B5] text-white"
